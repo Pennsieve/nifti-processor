@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+  nifti_processor:
+    build:
+      context: .
+      dockerfile: nifti_processor/Dockerfile
+    container_name: nifti-processor
+    command: ["python", "-m", "pytest", "-s", "-x", "--cov-report", "html:/docker_scratch/htmlreport", "--cov=nifti_processor", "tests/"]
+    env_file:
+      - nifti_processor/test.env
+    image: pennsieve/nifti-processor:${IMAGE_TAG}
+    volumes:
+      - ./data/nifti:/docker_scratch/
+      - ./nifti_processor/tests/resources:/test-resources/
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}

@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  nifti_processor:
+    build:
+      context: .
+      target: prod
+      dockerfile: nifti_processor/Dockerfile
+    container_name: nifti-processor
+    image: pennsieve/nifti-processor:${IMAGE_TAG}
